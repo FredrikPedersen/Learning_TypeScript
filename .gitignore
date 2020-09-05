@@ -15,5 +15,14 @@
 *.sar
 *.class
 
-# Typescript map-files
+# Typescript project files
 *.map
+*.js
+node_modules
+
+# IntelliJ project files 
+*.iml
+*.iws
+*.ipr
+.idea/
+out/
