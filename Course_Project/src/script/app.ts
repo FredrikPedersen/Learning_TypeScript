@@ -1,23 +1,24 @@
-type Combinable = number | string
-type ConversionDescriptor = "as-number" | "as-text"
-
-const combine = (
-    value1: Combinable,
-    value2: Combinable,
-    resultConversion: ConversionDescriptor
-): number | string => {
-    if (typeof value1 == "number" && typeof value2 == "number" || resultConversion === "as-number") {
-        return +value1 + +value2;
-    } else {
-        return value1.toString() + " " + value2.toString();
-    }
+const addNumbers = (value1: number, value2: number): number => {
+    return value1 + value2
 };
 
-const combinedAges = combine(30, 26, "as-number");
-console.log(combinedAges);
+const printMessage = (message: string): void => {
+    console.log(message);
+};
 
-const combinedStringAges = combine("30", "26", "as-number");
-console.log(combinedStringAges);
+const addAndHandle = (value1: number, value2: number, callback: (num: number) => void ) => {
+    const result = value1 + value2;
+    callback(result);
+};
 
-const combinedNames = combine("Fredrik", "Thomas", "as-text");
-console.log(combinedNames);
+printMessage("This functions does not return anything!");
+
+
+let combineValues: (a: number, b: number) => number;
+combineValues = addNumbers;
+
+console.log(combineValues(3,4));
+
+addAndHandle(10, 20, (result) => {
+    console.log(result);
+});
