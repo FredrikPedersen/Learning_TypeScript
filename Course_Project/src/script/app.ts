@@ -1,7 +1,10 @@
+type Combinable = number | string
+type ConversionDescriptor = "as-number" | "as-text"
+
 const combine = (
-    value1: number | string,
-    value2: number | string,
-    resultConversion: "as-number" | "as-text"
+    value1: Combinable,
+    value2: Combinable,
+    resultConversion: ConversionDescriptor
 ): number | string => {
     if (typeof value1 == "number" && typeof value2 == "number" || resultConversion === "as-number") {
         return +value1 + +value2;
