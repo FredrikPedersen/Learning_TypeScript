@@ -1,24 +1,13 @@
-enum  Role {
-    ADMIN,
-    READ_ONLY,
-    AUTHOR
-}
-
-const person = {
-    name: "Fredrik",
-    age: 25,
-    hobbies: ["Sports", "Cooking"],
-    role: Role.ADMIN
+const combine = (value1: number | string, value2: number | string): number | string => {
+    if (typeof value1 == "number" && typeof value2 == "number") {
+        return value1 + value2;
+    } else {
+        return value1.toString() + " " + value2.toString();
+    }
 };
 
-let favoriteActivities: string[];
-favoriteActivities = ["Video Games", "Gym"];
+const combinedAges = combine(30, 26);
+console.log(combinedAges);
 
-person.hobbies.forEach(hobby => {
-   console.log(hobby.toUpperCase());
-});
-
-
-if (person.role == Role.ADMIN) {
-    console.log("HE IS AN ADMIN")
-}
+const combinedNames = combine("Fredrik", "Thomas");
+console.log(combinedNames);
