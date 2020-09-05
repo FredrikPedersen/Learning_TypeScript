@@ -1,0 +1,19 @@
+
+# Default excludes
+
+# Binaries
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+*.war
+*.ear
+*.sar
+*.class
+
+# Typescript map-files
+*.map
