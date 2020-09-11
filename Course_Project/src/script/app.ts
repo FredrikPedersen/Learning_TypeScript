@@ -2,11 +2,13 @@ class Department {
 
     private employees: string[] = [];
 
-    constructor(private name: string) { //Name is initialized and added as field to the class here
+    //Name and id is initialized and added as fields to the class here
+    //With the readonly tag, id cannot be modified after being initialized.
+    constructor(private readonly id: string, private name: string) {
     }
 
     describe(this: Department) {
-        console.log("Department: " + this.name);
+        console.log("Department: " + this.id + " " + this.name);
         console.log("Employees: " + this.employees);
     }
 
@@ -20,7 +22,7 @@ class Department {
     }
 }
 
-const classInstance = new Department("Orakel");
+const classInstance = new Department("d1", "Orakel");
 classInstance.addEmployee("Fredrik");
 classInstance.addEmployee("Ana-Maria");
 
