@@ -1,10 +1,8 @@
 class Department {
 
-    private name: string;
     private employees: string[] = [];
 
-    constructor(name: string) {
-        this.name = name;
+    constructor(private name: string) { //Name is initialized and added as field to the class here
     }
 
     describe(this: Department) {
