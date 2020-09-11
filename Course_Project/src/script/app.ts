@@ -5,7 +5,12 @@ class Department {
     constructor(name: string) {
         this.name = name;
     }
+
+    describe(this: Department) {
+        console.log("Department: " + this.name);
+    }
 }
 
 const classInstance = new Department("Orakel");
-console.log(classInstance);
+
+classInstance.describe()
