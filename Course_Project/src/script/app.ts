@@ -1,10 +1,14 @@
 interface Greetable {
+    readonly name: string;
+
     greet(phrase: string): void;
 }
 
 class Person implements Greetable {
+    name: string
     
-    constructor(private name: string) {
+    constructor(name: string) {
+        this.name = name;
     }
     
     greet(phrase: string) {
@@ -12,5 +16,6 @@ class Person implements Greetable {
     }
 }
 
-const fredrik = new Person("Fredrik");
-fredrik.greet("Hello There");
+let user1: Greetable;
+user1 = new Person("Fredrik");
+user1.greet("Hello There");
