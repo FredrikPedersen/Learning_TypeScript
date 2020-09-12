@@ -1,17 +1,15 @@
-class Department {
+abstract class Department {
     static fiscalYear = 2020;
     protected employees: string[] = [];
 
-    constructor(private readonly id: string, public name: string) {
+    protected constructor(protected readonly id: string, protected name: string) {
     }
 
     static createEmployee(name: string) {
         return {name: name}
     }
 
-    describe(this: Department) {
-        console.log(`Department (${this.id}): ${this.name}`);
-    }
+    abstract describe(this: Department): void;
 
     addEmployee(employee: string) {
         this.employees.push(employee);
@@ -26,10 +24,18 @@ class Department {
 class AccountingDepartment extends Department {
 
     private lastReport: string;
+    private static instance: AccountingDepartment;
 
-    constructor(id: string, private reports: string[]) {
+    protected constructor(id: string, private reports: string[]) {
         super(id, "Accounting");
         this.lastReport = reports[0];
+    }
+
+    static getInstance() {
+        if (!this.instance) {
+            this.instance = new AccountingDepartment("acc1", []);
+        }
+        return this.instance;
     }
 
     addEmployee(name: string) {
@@ -61,11 +67,15 @@ class AccountingDepartment extends Department {
         }
         this.addReport(value);
     }
+
+    describe(this: AccountingDepartment) {
+        console.log("Accounting Department: " + this.id);
+    }
 }
 
 const employee1 = Department.createEmployee("Fredrik");
 console.log(employee1, + " ", Department.fiscalYear);
-const accounting = new AccountingDepartment("d2", []);
+const accounting = AccountingDepartment.getInstance();
 
 accounting.mostRecentReport = "Year End Report";
 accounting.addReport("Something went wrong...");
