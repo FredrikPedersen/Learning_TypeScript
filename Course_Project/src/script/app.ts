@@ -1,23 +1,33 @@
-interface Named {
-    readonly name: string;
+//Use of Intersection Types and Interfaces to create the same solution.
+type TAdmin = {
+    name: string;
+    privileges: string[];
+};
+
+type TEmployee = {
+    name: string;
+    startDate: Date;
+};
+
+type TElevatedEmployee = TAdmin & TEmployee;
+
+interface IAdmin {
+    name: string;
+    privileges: string[];
 }
 
-interface Greetable extends Named {
-    greet(phrase?: string): void; //? annotates optional values
+interface IEmployee {
+    name: string;
+    startDate: Date;
 }
 
-class Person implements Greetable {
-    name: string
+interface IElevatedEmployee extends IAdmin, IEmployee {
 
-    constructor(name: string) {
-        this.name = name;
-    }
-
-    greet() {
-        console.log("Hello There! My name is " + this.name);
-    }
 }
 
-let user1: Greetable;
-user1 = new Person("Fredrik");
-user1.greet();
+
+const employee: TElevatedEmployee = {
+    name: "Fredrik",
+    privileges: ["create", "read", "update", "delete"],
+    startDate: new Date()
+}
