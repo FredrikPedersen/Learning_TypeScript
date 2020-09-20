@@ -29,9 +29,9 @@ const employee: TElevatedEmployee = {
     name: "Fredrik",
     privileges: ["create", "read", "update", "delete"],
     startDate: new Date()
-}
+};
 
-/* ----------------------------------- */
+/* ----------------- Intersection Types ------------------ */
 
 // @ts-ignore
 type Combinable = string | number;
@@ -58,11 +58,11 @@ const printEmployeeInformation = (employee: TUnknownEmployee) => {
     if ("startDate" in employee) {
         console.log(employee.startDate);
     }
-}
+};
 
 printEmployeeInformation(employee);
 
-/* ------------------------- */
+/* ----------- Type Guards -------------- */
 
 class Car {
     drive() {
@@ -95,3 +95,40 @@ const useVehicle = (vehicle: Vehicle) => {
 useVehicle(v1);
 useVehicle(v2);
 
+/* ------------ Discriminated Unions ------------- */
+
+interface Bird {
+    type: "bird";
+    flyingSpeed: number;
+}
+
+interface Horse {
+    type: "horse";
+    runningSpeed: number;
+}
+
+type Animal = Bird | Horse
+
+const moveAnimal = (animal: Animal) => {
+    let speed;
+    switch (animal.type) {
+        case "bird":
+            speed = animal.flyingSpeed;
+            break;
+        case "horse":
+            speed = animal.runningSpeed;
+            break;
+    }
+
+    console.log("Animal moving at " + speed + " km/h");
+};
+
+moveAnimal({type: "bird", flyingSpeed: 10});
+
+/* --------------- Typecasting --------------- */
+
+//This typecasting syntax clashes with the React.js JSX-syntax
+//const userInputElement = <HTMLInputElement>document.getElementById("user-input")!;
+
+const userInputElement = document.getElementById("user-input")! as HTMLInputElement;
+userInputElement.value = "Hello There";
