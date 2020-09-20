@@ -148,3 +148,21 @@ const errorBag: ErrorContainer = {
     password: "Valid"
 };
 
+/* ---------- Optional Chaining and Nullish Coalescing ---------- */
+
+//Image we are fetching data from an API, all data attributes might not be there.
+const fetchedUserData = {
+    id: "u1",
+    name: "Fredrik",
+    job: {title: "Developer", description: "Forum Market Services"}
+};
+
+//The ?-operator makes sure the attribute before the operator is there before continuing down the chain.
+console.log(fetchedUserData?.job?.title);
+
+
+//The ??-operator checks if the property before the operator is null or undefined, then uses the value after the operator if it is.
+const userInput = null;
+const storedData = userInput ?? "Default";
+console.log(storedData);
+
