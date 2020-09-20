@@ -132,3 +132,14 @@ moveAnimal({type: "bird", flyingSpeed: 10});
 
 const userInputElement = document.getElementById("user-input")! as HTMLInputElement;
 userInputElement.value = "Hello There";
+
+/*------------- Index Properties */
+
+interface ErrorContainer {
+    [prop: string]: string;
+}
+
+const errorBag: ErrorContainer = {
+    email: "Not valid",
+    password: "Valid"
+};
