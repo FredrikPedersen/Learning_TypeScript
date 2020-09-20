@@ -31,20 +31,24 @@ const employee: TElevatedEmployee = {
     startDate: new Date()
 };
 
-/* ----------------- Intersection Types ------------------ */
+/* ----------------- Intersection Types and Function Overloads  ------------------ */
 
-// @ts-ignore
-type Combinable = string | number;
+//See here for arrow-function overload syntax: https://stackoverflow.com/questions/39187614/typescript-overload-arrow-functions?rq=1
+type Combineable = string | number;
 type Numeric = number | boolean;
-type Universal = Combinable & Numeric;
+type Universal = Combineable & Numeric;
 
-// @ts-ignore
-const add = (a: Combinable, b: Combinable) => {
+function addOverloaded(a: number, b: number): number
+function addOverloaded(a: string, b: string): string;
+function addOverloaded(a: string, b: number): string;
+function addOverloaded(a: number, b: string): string;
+
+function addOverloaded(a: Combineable, b: Combineable){
     if (typeof a === "string" || typeof b === "string") {
         return a.toString() + b.toString();
     }
     return a + b;
-};
+}
 
 type TUnknownEmployee = TEmployee | TAdmin;
 
@@ -133,7 +137,7 @@ moveAnimal({type: "bird", flyingSpeed: 10});
 const userInputElement = document.getElementById("user-input")! as HTMLInputElement;
 userInputElement.value = "Hello There";
 
-/*------------- Index Properties */
+/*------------- Index Properties ------------ */
 
 interface ErrorContainer {
     [prop: string]: string;
@@ -143,3 +147,4 @@ const errorBag: ErrorContainer = {
     email: "Not valid",
     password: "Valid"
 };
+
