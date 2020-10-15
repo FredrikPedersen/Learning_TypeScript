@@ -10,7 +10,7 @@ const merged = merge({name: "Fredrik"}, {age: 25});
 console.log(merged.name + " " + merged.age);
 
 
-/* ----- Part 97 - ----- */
+/* ----- Part 97 ----- */
 
 //Creating an interface to guarantee that the type we get in have a length property
 interface Lengthy {
@@ -29,3 +29,12 @@ function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
 }
 
 console.log(countAndDescribe("Hello There!"));
+
+
+/* ----- Part 98 ----- */
+function extractAndConvert<T extends object, U extends keyof T>(obj: T, key: U) {
+    return obj[key];
+}
+
+const test = extractAndConvert({name: "Fredrik"}, "name");
+console.log(test);
