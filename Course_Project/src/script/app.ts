@@ -1,8 +1,9 @@
-//Samples of declaring datatypes of classes that utilizes generics.
-const names: Array<string> = ["Hello"];
+function merge<T, U>(objA: T, objB: U) {
+    return Object.assign(objA, objB);
+}
 
-const promise: Promise<string> = new Promise((resolve) => {
-   setTimeout(() => {
-       resolve("This is done!");
-   }, 2000);
-});
+//Using generics in the function, TypeScript understands that there are two specific types going in as parameters, in
+//contrary to using object as the type of the parameters.
+const mergedRedundant = merge<{name: string}, {age: number}>({name: "Fredrik"}, {age: 25});
+const merged = merge({name: "Fredrik"}, {age: 25});
+console.log(merged.name + " " + merged.age);
