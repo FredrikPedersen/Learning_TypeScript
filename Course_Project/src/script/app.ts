@@ -1,3 +1,4 @@
+/* ----- Part 93 - 96 ----- */
 function merge<T extends object, U extends object>(objA: T, objB: U) {
     return Object.assign(objA, objB);
 }
@@ -8,3 +9,23 @@ const mergedRedundant = merge<{name: string}, {age: number}>({name: "Fredrik"}, 
 const merged = merge({name: "Fredrik"}, {age: 25});
 console.log(merged.name + " " + merged.age);
 
+
+/* ----- Part 97 - ----- */
+
+//Creating an interface to guarantee that the type we get in have a length property
+interface Lengthy {
+    length: number;
+}
+
+function countAndDescribe<T extends Lengthy>(element: T): [T, string] {
+    let descriptionText: string = "Got no value";
+
+    if (element.length === 1) {
+        descriptionText = "Got 1 element"
+    } else  if(element.length > 1) {
+        descriptionText = "Got " + element.length + " elemnts";
+    }
+    return [element, descriptionText];
+}
+
+console.log(countAndDescribe("Hello There!"));
