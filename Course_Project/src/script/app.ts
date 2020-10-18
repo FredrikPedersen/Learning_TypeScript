@@ -71,3 +71,23 @@ objectStorage.addItem({name: "Fredrik"});
 objectStorage.addItem({name: "Nikia"});
 objectStorage.removeItem({name: "Fredrik"});
 console.log(objectStorage.getItems()); */
+
+/* ----- Part 101 - Generic Utility Types ----- */
+
+interface CourseGoal {
+    title: string;
+    description: string;
+    completeUntil: Date;
+}
+
+//Partial makes all properties in the object optional. Need to be typecast before being returned.
+function createCourseGoal(title: string, description: string, date: Date) : CourseGoal {
+    let courseGoal: Partial<CourseGoal> = {};
+    courseGoal.title = title;
+    courseGoal.description = description;
+    courseGoal.completeUntil = date;
+    return courseGoal as CourseGoal;
+}
+
+//Readonly<> marks a variable as immutable.
+const names: Readonly<string[]> = ["Fredrik", "Nikita"];
