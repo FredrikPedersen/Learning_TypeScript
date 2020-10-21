@@ -80,6 +80,7 @@ class Product {
 
 /* ----- Part 112: Returning and Changing a Class in A Decorator ----- */
 
+// Note: Only Class, Method and Accessor-decorators may return values which are not ignored by TypeScript.
 // Returns a new class with the template when the class is instantiated. Note how it extends the original class by
 // extending the originalConstructor.
 function WithTemplate(template: string, hookId: string) {
