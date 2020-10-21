@@ -1,13 +1,15 @@
-/* ----- Part 105 - A First Class Decorator ----- */
+/* ----- Part 105 - 106: Intro to Decorators ----- */
 
 // Conventions dictate decorator-functions start with upper-case names
-function Logger(constructor: Function) {
-    console.log("Logging");
-    console.log(constructor);
+function Logger(logString: string): Function {
+    return function(constructor: Function) {
+        console.log(logString);
+        console.log(constructor);
+    }
 }
 
 //The @-symbol is a special identifier Typescript recognizes to point to a decorator function.
-@Logger
+@Logger("LOGGING - PERSON")
 class PersonWithLogger {
     name: String = "Fredrik";
 
