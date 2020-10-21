@@ -87,7 +87,7 @@ function WithTemplate(template: string, hookId: string) {
     return function<T extends {new(...args: any[]): {name: string} }> (originalConstructor: T) {
 
         return class extends originalConstructor {
-            constructor(...args: any[]) {
+            constructor(..._: any[]) {
                 super();
 
                 const hookElement = document.getElementById(hookId);
@@ -111,3 +111,33 @@ class DecoratedWithReturnValue {
 }
 
 const instantiatedClass: DecoratedWithReturnValue = new DecoratedWithReturnValue();
+
+/* ----- Part 114: Creating an Autobind Decorator ----- */
+
+// Decorator to always bind "this" to the object the called method belongs to
+function Autobind(_: any, _2: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+
+    const adjustedDescriptor: PropertyDescriptor = {
+        configurable: true,
+        enumerable: false,
+        get() {
+            return originalMethod.bind(this);
+        },
+    };
+
+    return adjustedDescriptor;
+}
+
+class Printer {
+    message = "This works";
+
+    @Autobind
+    showMessage() {
+        console.log(this.message);
+    }
+}
+
+const printer = new Printer();
+const button = document.querySelector("button")!;
+button.addEventListener("click", printer.showMessage);
