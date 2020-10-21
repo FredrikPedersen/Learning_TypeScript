@@ -1,4 +1,4 @@
-/* ----- Part 105 - 106: Intro to Decorators ----- */
+/* ----- Part 105 - 107: Intro to Decorators ----- */
 
 // Conventions dictate decorator-functions start with upper-case names
 function Logger(logString: string): Function {
@@ -8,9 +8,22 @@ function Logger(logString: string): Function {
     }
 }
 
+function WithTemplate(template: string, hookId: string) {
+    return function (constructor: any) {
+        const hookElement = document.getElementById(hookId);
+        const person = new constructor();
+
+        if (hookElement) {
+            hookElement.innerHTML = template;
+            hookElement.querySelector("h1")!.textContent = person.name;
+        }
+    }
+}
+
 //The @-symbol is a special identifier Typescript recognizes to point to a decorator function.
 @Logger("LOGGING - PERSON")
-class PersonWithLogger {
+@WithTemplate("<h1>My Person Object</h1>", "app")
+class PersonWithDecorators {
     name: String = "Fredrik";
 
     constructor() {
@@ -18,4 +31,4 @@ class PersonWithLogger {
     }
 }
 
-const classWithDecorator = new PersonWithLogger();
+const classWithDecorator = new PersonWithDecorators();
