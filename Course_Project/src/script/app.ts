@@ -35,17 +35,40 @@ class PersonWithDecorators {
 
 const classWithDecorator = new PersonWithDecorators();
 
-/* ----- Part 109: Diving Into Property Decorators ----- */
+/* ----- Part 109 and 110: Property, Accessor and Parameter Decorators ----- */
 
-// target and propertyName are a properties a Decorator receives when applied to a class property
-function Log(target: any, propertyName: string | symbol) {
+// target and propertyName are arguments a Decorator receives when applied to a class property
+function PropertyLogger(target: any, propertyName: string | symbol) {
     console.log("Property Decorator");
-    console.log(target, propertyName);
+    console.log(target);
+    console.log(propertyName);
+}
+
+// target, name and descriptor are arguments a Decorator receives when applied to an accessor
+function AccessorLogger(target: any, name: string | Symbol, descriptor: PropertyDescriptor) {
+    console.log("Accessor decorator!");
+    console.log(target);
+    console.log(name);
+    console.log(descriptor);
+}
+
+function MethodLogger(target: any, name: string | Symbol, descriptor: PropertyDescriptor) {
+    console.log("Method decorator!");
+    console.log(target);
+    console.log(name);
+    console.log(descriptor);
+}
+
+function ParameterLogger(target: any, name: string | Symbol, position: number) {
+    console.log("Parameter decorator!");
+    console.log(target);
+    console.log(name);
+    console.log(position);
 }
 
 class Product {
 
-    @Log
+    @PropertyLogger
     title: string;
     private _price: number;
 
@@ -54,10 +77,12 @@ class Product {
         this._price = price;
     }
 
-    getPriceWithTax(tax: number) {
+    @MethodLogger
+    getPriceWithTax(@ParameterLogger tax: number) {
         return this._price * (1 + tax);
     }
 
+    @AccessorLogger
     set price(price: number) {
         if (price > 0) {
             this._price = price;
@@ -66,3 +91,4 @@ class Product {
         }
     }
 }
+
