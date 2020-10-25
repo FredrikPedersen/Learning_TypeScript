@@ -5,10 +5,22 @@
 
 /* ----- State Management ----- */
 
+enum ProjectStatus {Active, Finished}
+type Listener = (items: Project[]) => void; //A listener is a function which takes in a list of projects and returns nothing
+
+class Project {
+
+    public id: string;
+
+    constructor(public title: string, public description: string, public people: number, public status: ProjectStatus) {
+        this.id = Math.random().toString();
+    }
+}
+
 class ProjectState {
-    private projects: any[] = [];
+    private projects: Project[] = [];
+    private listeners: Listener[] = [];
     private static INSTANCE: ProjectState;
-    private listeners: any[] = [];
 
     //Private constructor to prevent direct instantiation and enforce singleton pattern
     private constructor() {}
@@ -22,21 +34,16 @@ class ProjectState {
         return this.INSTANCE;
     }
 
-    addListener(listenerFunction : Function) {
+    addListener(listenerFunction : Listener) {
         this.listeners.push(listenerFunction);
     }
 
     addProject(title: string, description: string, numberOfPeople: number) {
-        const newProject =  {
-            id: Math.random().toString(), //Not really a unique ID, but does it's job for this small demo project
-            title: title,
-            description: description,
-            people: numberOfPeople
-        };
+        const newProject = new Project(title, description, numberOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
 
         this.listeners.forEach(listenerFunction => {
-            listenerFunction(this.projects.slice()); //Passes a copy of the projects array to prevent mutating the array in a different place
+            listenerFunction(this.projects.slice()); //Passes a copy of the array to prevent mutating it in a different place
         })
     }
 }
@@ -103,7 +110,7 @@ class ProjectList {
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     sectionElement: HTMLElement;
-    assignedProjects: any[];
+    assignedProjects: Project[];
 
     constructor(private type: "active" | "finished") {
         this.templateElement = document.getElementById("project-list")! as HTMLTemplateElement;
@@ -115,7 +122,7 @@ class ProjectList {
         this.sectionElement = importedNode.firstElementChild as HTMLElement;
         this.sectionElement.id = `${this.type}-projects`;
 
-        projectState.addListener((projects: any[]) => {
+        projectState.addListener((projects: Project[]) => {
             this.assignedProjects = projects;
             this.renderProjects();
         });
