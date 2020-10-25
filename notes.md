@@ -17,7 +17,9 @@ npm install lite-server --save-dev
 	"compilerOptions": {
 		"target": "es6",
 		"module": "es2015",
+		"sourceMap": true,   
 		"outDir": "./dist",
+		"removeComments": true,
 		"experimentalDecorators": true,
 	},
 	"exclude": [
@@ -47,16 +49,31 @@ npm install webpack webpack-cli webpack-dev-server typescript ts-loader
  - TypeScript for having a local typescript instalation in case of global version mismatches with project version.
  - Ts-loader works with webpack to convert typescript to javascript to enable typescript to js compilation and then bundling.
  
-3.1 Create webpack.config.js file
+3.1 Create webpack.config.js file  
+
+Look at the [official webpack docs](https://webpack.js.org/concepts/) for more information 
 
 ```Javascript
 const path = require("path");
 
 module.exports = {
-	entry: "./src/script/app.ts", // entrypoint for the application
+    entry: "./src/script/app.ts",
     output: {
-        filename: "bundle.js", // output filename
-        path: path.resolve(__dirname, "build") // output file location. Needs an absolute path
+        filename: "bundle.js",
+        path: path.resolve(__dirname, "build")
+    },
+    devtool: "inline-source-map",
+    module: {
+        rules: [
+            {
+                test: /\.ts$/, // Regex specifying that all .ts-files should be handled by this rule
+                use: "ts-loader",
+                exclude: /node_modules/
+            }
+        ],
+    },
+    resolve: {
+        extensions: [".ts", "js"] //enables webpack to look for ts and js files. Only js files is default.
     }
 };
 ```
