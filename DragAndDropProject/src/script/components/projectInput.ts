@@ -1,4 +1,7 @@
 /// <reference path="baseComponent.ts" />
+/// <reference path="../utility/validation.ts" />
+/// <reference path="../decorators/autobind.ts" />
+/// <reference path="../state/statemanagement.ts" />
 
 namespace App {
 
