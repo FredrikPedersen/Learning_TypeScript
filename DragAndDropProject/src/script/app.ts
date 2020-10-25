@@ -152,9 +152,17 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{
 
     protected renderContent(): void {
         this.newElement.querySelector("h2")!.textContent = this.project.title;
-        this.newElement.querySelector("h3")!.textContent = this.project.people.toString() + " participants";
+        this.newElement.querySelector("h3")!.textContent = this.participantsString;
         this.newElement.querySelector("p")!.textContent = this.project.description;
     };
+
+    get participantsString(): string {
+        if (this.project.people === 1) {
+            return "1 participant";
+        } else {
+            return `${this.project.people} participants`
+        }
+    }
 } // ProjectItem
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
