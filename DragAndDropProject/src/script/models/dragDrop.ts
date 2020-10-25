@@ -1,5 +1,3 @@
-/* ----- Drag and Drop Functionality ----- */
-
 namespace App {
     export interface IDraggable {
         dragStartHandler(event: DragEvent): void;
@@ -11,4 +9,4 @@ namespace App {
         dropHandler(event: DragEvent): void;
         dragLeaveHandler(event: DragEvent): void;
     } // IDragTarget
-} // DDInterfaces
+} //namespace App

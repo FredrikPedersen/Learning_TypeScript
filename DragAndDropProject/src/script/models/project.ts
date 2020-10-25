@@ -9,5 +9,5 @@ namespace App {
         constructor(public title: string, public description: string, public people: number, public status: ProjectStatus) {
             this.id = Math.random().toString();
         }
-    } // Project
-}
+    } // class Project
+} //namespace App
