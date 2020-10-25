@@ -20,7 +20,7 @@ class Project {
 abstract class State<T> {
     protected listeners: Listener<T>[] = [];
 
-    public addListener(listenerFunction : Listener<T>) {
+    public addListener(listenerFunction : Listener<T>): void {
         this.listeners.push(listenerFunction);
     }
 }
@@ -32,7 +32,7 @@ class ProjectState extends State<Project>{
     //Private constructor to prevent direct instantiation and enforce singleton pattern
     private constructor() {super();}
 
-    static getInstance() {
+    static getInstance(): ProjectState {
         if (this.INSTANCE) {
             return this.INSTANCE;
         }
@@ -41,7 +41,7 @@ class ProjectState extends State<Project>{
         return this.INSTANCE;
     }
 
-    addProject(title: string, description: string, numberOfPeople: number) {
+    addProject(title: string, description: string, numberOfPeople: number): void {
         const newProject = new Project(title, description, numberOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
 
@@ -94,7 +94,7 @@ function validate(validatables: Validatable[]) : boolean {
 
 /* ----- Decorators ----- */
 
-function Autobind(target: any, methodName: string, descriptor: PropertyDescriptor) {
+function Autobind(target: any, methodName: string, descriptor: PropertyDescriptor): PropertyDescriptor {
     const originalMethod = descriptor.value;
     const adjustedDescriptor: PropertyDescriptor = {
         configurable: true,
@@ -127,13 +127,35 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
         this.attachToDOM(insertAtStart);
     }
 
-    private attachToDOM(insertAtStart: boolean) {
+    private attachToDOM(insertAtStart: boolean): void {
         this.hostElement.insertAdjacentElement(insertAtStart ? "afterbegin" : "beforeend", this.newElement);
     }
 
     protected abstract configure(): void;
     protected abstract renderContent?(): void;
 } // Component
+
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{
+
+    private project: Project;
+
+    constructor(hostId: string, project: Project) {
+        super("single-project", hostId, false, project.id);
+        this.project = project;
+
+        this.configure();
+        this.renderContent();
+    }
+
+    protected configure(): void {
+    }
+
+    protected renderContent(): void {
+        this.newElement.querySelector("h2")!.textContent = this.project.title;
+        this.newElement.querySelector("h3")!.textContent = this.project.people.toString() + " participants";
+        this.newElement.querySelector("p")!.textContent = this.project.description;
+    };
+} // ProjectItem
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
     assignedProjects: Project[];
@@ -169,9 +191,7 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
         listElement.innerHTML = ""; //Clear HTML element to prevent duplicate rendering
 
         this.assignedProjects.forEach(project => {
-            const listItem = document.createElement("li");
-            listItem.textContent =  project.title;
-            listElement.appendChild(listItem);
+            new ProjectItem(this.newElement.querySelector("ul")!.id, project)
         })
     }
 } // Project List
@@ -214,7 +234,7 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
         }
     }
 
-    protected configure() {
+    protected configure(): void {
         this.titleInputElement = this.newElement.querySelector("#title")! as HTMLInputElement;
         this.descriptionInputElement = this.newElement.querySelector("#description")! as HTMLInputElement;
         this.peopleInputElement = this.newElement.querySelector("#people")! as HTMLInputElement;
@@ -224,14 +244,14 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
 
     protected renderContent(): void {};
 
-    private clearInputs() {
+    private clearInputs(): void {
         this.titleInputElement.value = "";
         this.descriptionInputElement.value = "";
         this.peopleInputElement.value = "";
     }
 
     @Autobind
-    private submitHandler(event: Event) {
+    private submitHandler(event: Event): void {
         event.preventDefault();
         const userInput = this.gatherUserInput();
 
