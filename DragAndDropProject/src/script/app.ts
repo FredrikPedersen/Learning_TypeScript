@@ -53,12 +53,27 @@ class ProjectState extends State<Project>{
         return this.INSTANCE;
     }
 
-    addProject(title: string, description: string, numberOfPeople: number): void {
+    public moveProject(projectId: string, newStatus: ProjectStatus): void {
+        const project = this.projects.find(project => project.id === projectId);
+
+        if (project && project.status !== newStatus) {
+            project.status = newStatus;
+            this.updateListeners();
+        }
+    }
+
+    public addProject(title: string, description: string, numberOfPeople: number): void {
         const newProject = new Project(title, description, numberOfPeople, ProjectStatus.Active);
         this.projects.push(newProject);
 
         this.listeners.forEach(listenerFunction => {
             listenerFunction(this.projects.slice()); //Passes a copy of the array to prevent mutating it in a different place
+        })
+    }
+
+    private updateListeners() {
+        this.listeners.forEach(listenerFunction => {
+            listenerFunction(this.projects.slice());
         })
     }
 } // ProjectState
@@ -213,7 +228,8 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement> implements Drag
 
     @Autobind
     public dropHandler(event: DragEvent): void {
-        console.log(event);
+        const projectId = event.dataTransfer!.getData("text/plain");
+        projectState.moveProject(projectId, this.type === "active" ? ProjectStatus.Active : ProjectStatus.Finished)
     }
 
     @Autobind
