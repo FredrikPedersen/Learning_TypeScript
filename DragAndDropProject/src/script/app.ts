@@ -3,6 +3,18 @@
  * namespaces in TypeScript yet. Might refactor later as I get more experience with TypeScript.
  */
 
+/* ----- Drag and Drop Functionality ----- */
+interface Draggable {
+    dragStartHandler(event: DragEvent): void;
+    dragEndHandler(event: DragEvent): void;
+} // Draggable
+
+interface DragTarget {
+    dragOverHandler(event: DragEvent): void;
+    dropHandler(event: DragEvent): void;
+    dragLeaveHandler(event: DragEvent): void;
+} // DragTarget
+
 /* ----- State Management ----- */
 
 enum ProjectStatus {Active, Finished}
@@ -135,7 +147,7 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
     protected abstract renderContent?(): void;
 } // Component
 
-class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> implements Draggable{
 
     private project: Project;
 
@@ -147,7 +159,19 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{
         this.renderContent();
     }
 
+    @Autobind
+    public dragStartHandler(event: DragEvent): void {
+        console.log(event);
+    }
+
+    @Autobind
+    public dragEndHandler(event: DragEvent): void {
+        console.log("Drag end");
+    }
+
     protected configure(): void {
+        this.newElement.addEventListener("dragstart", this.dragStartHandler);
+        this.newElement.addEventListener("dragend", this.dragEndHandler);
     }
 
     protected renderContent(): void {
@@ -163,6 +187,7 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement>{
             return `${this.project.people} participants`
         }
     }
+
 } // ProjectItem
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
