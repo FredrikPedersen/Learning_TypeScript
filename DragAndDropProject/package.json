@@ -2,7 +2,7 @@
   "name": "DragAndDropProject",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "lite-server"
@@ -11,7 +11,6 @@
   "author": "Fredrik Pedersen",
   "license": "ISC",
   "devDependencies": {
-    "lite-server": "^2.5.4",
-    "typescript": "^4.0.3"
+    "lite-server": "^2.5.4"
   }
 }
