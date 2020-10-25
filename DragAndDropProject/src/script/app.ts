@@ -1,3 +1,48 @@
+/**
+ * Note: All the code for this project is done in a single file due to the course itself haven't covered modules and
+ * namespaces in TypeScript yet. Might refactor later as I get more experience with TypeScript.
+ */
+
+/* ----- State Management ----- */
+
+class ProjectState {
+    private projects: any[] = [];
+    private static INSTANCE: ProjectState;
+    private listeners: any[] = [];
+
+    //Private constructor to prevent direct instantiation and enforce singleton pattern
+    private constructor() {}
+
+    static getInstance() {
+        if (this.INSTANCE) {
+            return this.INSTANCE;
+        }
+
+        this.INSTANCE = new ProjectState();
+        return this.INSTANCE;
+    }
+
+    addListener(listenerFunction : Function) {
+        this.listeners.push(listenerFunction);
+    }
+
+    addProject(title: string, description: string, numberOfPeople: number) {
+        const newProject =  {
+            id: Math.random().toString(), //Not really a unique ID, but does it's job for this small demo project
+            title: title,
+            description: description,
+            people: numberOfPeople
+        };
+        this.projects.push(newProject);
+
+        this.listeners.forEach(listenerFunction => {
+            listenerFunction(this.projects.slice()); //Passes a copy of the projects array to prevent mutating the array in a different place
+        })
+    }
+}
+
+const projectState = ProjectState.getInstance();
+
 /* ----- Validation ----- */
 
 interface Validatable {
@@ -51,25 +96,42 @@ function Autobind(target: any, methodName: string, descriptor: PropertyDescripto
     return adjustedDescriptor;
 }
 
-/*----- Classes ----- */
+/*----- DOM Managing Classes ----- */
 
 class ProjectList {
 
     templateElement: HTMLTemplateElement;
     hostElement: HTMLDivElement;
     sectionElement: HTMLElement;
+    assignedProjects: any[];
 
     constructor(private type: "active" | "finished") {
         this.templateElement = document.getElementById("project-list")! as HTMLTemplateElement;
         this.hostElement = document.getElementById("app")! as HTMLDivElement;
         this.sectionElement = document.getElementById("projects")! as HTMLElement;
+        this.assignedProjects = [];
 
         const importedNode = document.importNode(this.templateElement.content, true);
         this.sectionElement = importedNode.firstElementChild as HTMLElement;
         this.sectionElement.id = `${this.type}-projects`;
 
+        projectState.addListener((projects: any[]) => {
+            this.assignedProjects = projects;
+            this.renderProjects();
+        });
+
         this.attachToDOM();
         this.renderContent();
+    }
+
+    private  renderProjects() {
+        const listElement = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+
+        this.assignedProjects.forEach(project => {
+            const listItem = document.createElement("li");
+            listItem.textContent =  project.title;
+            listElement.appendChild(listItem);
+        })
     }
 
     private renderContent() {
@@ -147,7 +209,7 @@ class ProjectInput {
 
         if(Array.isArray(userInput)) {
             const [title, description, people] = userInput;
-            console.log(title, description, people);
+            projectState.addProject(title, description, people);
             this.clearInputs();
         }
     }
