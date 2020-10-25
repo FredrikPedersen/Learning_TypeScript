@@ -18,7 +18,6 @@ npm install lite-server --save-dev
 		"target": "es6",
 		"module": "es2015",
 		"outDir": "./dist",
-		"rootDir": "./src",
 		"experimentalDecorators": true,
 	},
 	"exclude": [
@@ -47,3 +46,17 @@ npm install webpack webpack-cli webpack-dev-server typescript ts-loader
  - Webpack-dev-server for automatically trigger webpack to compile.
  - TypeScript for having a local typescript instalation in case of global version mismatches with project version.
  - Ts-loader works with webpack to convert typescript to javascript to enable typescript to js compilation and then bundling.
+ 
+3.1 Create webpack.config.js file
+
+```Javascript
+const path = require("path");
+
+module.exports = {
+	entry: "./src/script/app.ts", // entrypoint for the application
+    output: {
+        filename: "bundle.js", // output filename
+        path: path.resolve(__dirname, "build") // output file location. Needs an absolute path
+    }
+};
+```
