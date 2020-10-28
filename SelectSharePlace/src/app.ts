@@ -1,5 +1,4 @@
 const API_KEY = process.env.API_KEY;
-
 const form = document.querySelector("form")! as HTMLFormElement;
 const addressInput = document.getElementById("address")! as HTMLInputElement;
 
