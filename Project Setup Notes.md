@@ -2,7 +2,7 @@
 
 ## With Webpack: 
 
-1. Run these commands
+**1. Run these commands**
 ```Bash
 npm init # Creates package.json
 npm install webpack webpack-cli webpack-dev-server typescript ts-loader
@@ -16,7 +16,7 @@ npx tsc --init # Creates tsconfig.json. Alt: Copy from one of these projects.
  - Ts-loader works with webpack to convert typescript to javascript to enable typescript to js compilation and then bundling.
  - Clean-webpack-plugin is for wiping the build folder before rebundling the project in production environment.
 
-1.1 If initializing a new tsconfig, make sure to atleast have these values:
+**1.1 If initializing a new tsconfig, make sure to atleast have these values:**
 
 ```Javascript
 {
@@ -34,7 +34,7 @@ npx tsc --init # Creates tsconfig.json. Alt: Copy from one of these projects.
 }
 ````
  
-1.2 Create webpack.config.js file for development
+**1.2 Create webpack.config.js file for development**
 
 This can be done using [createapp.dev](https://createapp.dev/) if you are uncertain how to set up the config file.
 Look at the [official webpack docs](https://webpack.js.org/concepts/) for more information 
@@ -67,7 +67,7 @@ module.exports = {
 };
 ```
 
-1.3 Create webpack.config.prod.js file for production setup
+**1.3 Create webpack.config.prod.js file for production setup**
 
 ```Javascript
 const path = require("path");
@@ -102,8 +102,7 @@ module.exports = {
 };
 ```
 
-
-1.4 Configre package.json
+**1.4 Configre package.json**
 
 This is not required, but make sure to add scripts to package.json to make life a bit easier for yourself
 ```Javascript
@@ -115,11 +114,12 @@ This is not required, but make sure to add scripts to package.json to make life 
 },
 ```
 
-1.5 Set Javascript CDN in index.html to point to bundle.js.
+**1.5 Set Javascript CDN in index.html to point to bundle.js.**
 
 ## With lite-server (for smaller projects): 
 
-2 Run these commands
+**2 Run these commands**
+
 ```Bash
 npm init # Creates package.json
 npm install typescript --save-dev # Installs TypeScript
@@ -127,7 +127,7 @@ npx tsc --init # Creates tsconfig.json. Alt: Copy from one of these projects.
 npm install lite-server --save-dev
 ```
 
-2.1 If initializing a new tsconfig, make sure to atleast have these values:
+**2.1 If initializing a new tsconfig, make sure to atleast have these values:**
 
 ```Javascript
 {
@@ -146,7 +146,7 @@ npm install lite-server --save-dev
 }
 ````
 
-2.2 Create bs-config to point lite-server to root serving directory
+**2.2 Create bs-config to point lite-server to root serving directory**
  
  ```Javascript
 {
@@ -154,7 +154,7 @@ npm install lite-server --save-dev
 }
  ````
 
-2.3 Configre package.json
+**2.3 Configre package.json**
 
 ```Javascript
 "scripts": {
@@ -163,9 +163,9 @@ npm install lite-server --save-dev
 },
 ```
 
-2.4 Set Javascript CDN in index.html to point to whatever generated js-file should be your entry point.
+**2.4 Set Javascript CDN in index.html to point to whatever generated js-file should be your entry point.**
 
-2.5 If working with ES6 modules, remember to set Javascript CDN type to "module", and add .js file endings to all imports in TypeScript.
+**2.5 If working with ES6 modules, remember to set Javascript CDN type to "module", and add .js file endings to all imports in TypeScript.**
 
 ```HTML
 <script type="module" src="/build/app.js" defer></script>
