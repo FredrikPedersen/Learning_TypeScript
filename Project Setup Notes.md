@@ -108,7 +108,7 @@ This is not required, but make sure to add scripts to package.json to make life 
 ```Javascript
 "scripts": {
 	"test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server",
+    "start": ""webpack-dev-server"",
     "build": "webpack",
     "prod-build": "webpack --config webpack.config.prod.js"
 },
