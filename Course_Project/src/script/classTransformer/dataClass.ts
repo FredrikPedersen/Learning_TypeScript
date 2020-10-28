@@ -1,6 +1,13 @@
+//See https://github.com/typestack/class-validator
+import {IsNotEmpty, IsNumber, IsPositive} from "class-validator";
+
 export class DataClass {
 
+    @IsNotEmpty()
     name: string;
+
+    @IsNumber()
+    @IsPositive()
     age: number;
 
     constructor(name:string, age:number) {
