@@ -18,6 +18,7 @@
 # Typescript project files
 *.map
 *.js
+*.env
 node_modules
 
 # IntelliJ project files 
