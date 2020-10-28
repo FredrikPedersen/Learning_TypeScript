@@ -33,3 +33,22 @@ Has built-in TS-support, no config required.
 npm install --save axios
 ```
 
+## Google Maps
+
+Easiest way to get a map working seems to be to create a addMapToDOM function, after installing googlemaps types.
+See project [SelectSharePlace](https://github.com/FredrikPedersen/Understanding_TypeScript/tree/master/SelectSharePlace) for a working example.
+
+```Bash
+npm install --save-dev @types/googlemaps
+```
+
+```Javascript
+export function addMapToDOM() {
+    const script = document.createElement("script");
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
+    script.async = true;
+    script.defer = true;
+
+    document.head.appendChild(script);
+}
+```
