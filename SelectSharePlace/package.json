@@ -9,6 +9,7 @@
   "author": "Fredrik Pedersen",
   "license": "ISC",
   "devDependencies": {
+    "dotenv-webpack": "^4.0.0",
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.2",
     "webpack": "^4.41.2",
